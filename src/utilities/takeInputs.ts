@@ -1,6 +1,6 @@
 import promptSync from 'prompt-sync';
 const prompt = promptSync();
-
+import {displayRules} from './commands';
 
 function askName () {
    const name = prompt('What is your name? '); 
@@ -8,8 +8,14 @@ function askName () {
 }
 
 function askBetMoney () {
-    const bet = Number(prompt("Place your bet: "));
-    return bet
+
+    const bet = prompt("Place your bet: ");
+    if (bet == '/rules') {
+        displayRules();
+        return askBetMoney();
+    }
+
+    return Number(bet);
 }
 
 

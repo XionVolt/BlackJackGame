@@ -1,23 +1,28 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const takeInputs_1 = require("./takeInputs");
-const playerMoney_1 = require("./playerMoney");
-const betMoney = (0, takeInputs_1.askBetMoney)();
-function placeaskBetMoney() {
-    if (isNaN(betMoney)) {
-        console.log("Invalid askBetMoney. Please enter a number.", '\n');
-        placeaskBetMoney();
+exports.placeBet = placeBet;
+exports.askName = askName;
+exports.askBetMoney = askBetMoney;
+function placeBet(player, betAmount) {
+    if (betAmount > player.getMoney()) {
+        console.log("Insufficient funds to place this bet.");
+        return false;
     }
-    else if (betMoney > (0, playerMoney_1.getPlayerMoney)()) {
-        console.log(`You askBetMoney more money than you have. You have $${(0, playerMoney_1.getPlayerMoney)()}.`, '\n');
-        placeaskBetMoney();
-    }
-    else if (betMoney <= 0) {
-        console.log(`You askBetMoney less money than you have. You have $${(0, playerMoney_1.getPlayerMoney)()}.`, '\n');
-        placeaskBetMoney();
-    }
-    else {
-        (0, playerMoney_1.setPlayerMoney)((0, playerMoney_1.getPlayerMoney)() - betMoney);
-        console.log(`You askBetMoney $${takeInputs_1.askBetMoney} . Left: $${(0, playerMoney_1.getPlayerMoney)()}.`, '\n');
-    }
+    player.updateMoney(-betAmount);
+    return true;
+}
+// takeInputs.ts
+const prompt_sync_1 = __importDefault(require("prompt-sync"));
+function askName() {
+    return (0, prompt_sync_1.default)()('What is your name? ');
+}
+function askBetMoney() {
+    let bet;
+    do {
+        bet = parseFloat((0, prompt_sync_1.default)()('Enter your bet amount: '));
+    } while (isNaN(bet) || bet <= 0);
+    return bet;
 }

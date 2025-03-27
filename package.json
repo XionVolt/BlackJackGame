@@ -3,7 +3,7 @@
     "prompt-sync": "^4.2.0"
   },
   "scripts": {
-    "start": "tsc && node build/js/app.js"
+    "start": "tsc && node build/js/main.js"
   },
   "devDependencies": {
     "@types/prompt-sync": "^4.2.3"

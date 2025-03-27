@@ -1,15 +1,15 @@
-// Player Initial Money 
-let playerMoney = 100;
+export class Player {
+    private money: number;
 
-function getPlayerMoney() {
-    return playerMoney;
+    constructor(initialMoney: number = 100) {
+        this.money = initialMoney;
+    }
+
+    getMoney(): number {
+        return this.money;
+    }
+
+    updateMoney(amount: number): void {
+        this.money += amount;
+    }
 }
-
-function setPlayerMoney(money: number) {
-    playerMoney = money;
-}
-
-
-// --------- Imports ------------
-
-export { getPlayerMoney,setPlayerMoney };

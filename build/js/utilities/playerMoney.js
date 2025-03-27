@@ -1,12 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getPlayerMoney = getPlayerMoney;
-exports.setPlayerMoney = setPlayerMoney;
-// Player Initial Money 
-let playerMoney = 100;
-function getPlayerMoney() {
-    return playerMoney;
+exports.Player = void 0;
+class Player {
+    money;
+    constructor(initialMoney = 100) {
+        this.money = initialMoney;
+    }
+    getMoney() {
+        return this.money;
+    }
+    updateMoney(amount) {
+        this.money += amount;
+    }
 }
-function setPlayerMoney(money) {
-    playerMoney = money;
-}
+exports.Player = Player;

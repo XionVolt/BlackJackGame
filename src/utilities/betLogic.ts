@@ -1,23 +1,26 @@
-import {askBetMoney} from './takeInputs';
-import { getPlayerMoney, setPlayerMoney } from './playerMoney';
+import { Player } from "./playerMoney";
 
-const betMoney = askBetMoney();
-
-
-function placeaskBetMoney() 
-{
-    if (isNaN(betMoney)) {
-        console.log("Invalid askBetMoney. Please enter a number.",'\n');
-        placeaskBetMoney();
-    } else if (betMoney > getPlayerMoney()) {
-        console.log(`You askBetMoney more money than you have. You have $${getPlayerMoney()}.`, '\n');
-        placeaskBetMoney();
+export function placeBet(player: Player, betAmount: number): boolean {
+    if (betAmount > player.getMoney()) {
+        console.log("Insufficient funds to place this bet.");
+        return false;
     }
-    else if (betMoney <= 0) {
-        console.log(`You askBetMoney less money than you have. You have $${getPlayerMoney()}.`, '\n');
-        placeaskBetMoney();
-    } else {
-        setPlayerMoney(getPlayerMoney() - betMoney);
-        console.log(`You askBetMoney $${askBetMoney} . Left: $${getPlayerMoney()}.`, '\n');
-    }
+    player.updateMoney(-betAmount);
+    return true;
+}
+
+// takeInputs.ts
+import promptSync from 'prompt-sync';
+
+
+export function askName(): string {
+    return promptSync()('What is your name? ');
+}
+
+export function askBetMoney(): number {
+    let bet: number;
+    do {
+        bet = parseFloat(promptSync()('Enter your bet amount: '));
+    } while (isNaN(bet) || bet <= 0);
+    return bet;
 }
