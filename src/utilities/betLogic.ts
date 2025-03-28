@@ -20,7 +20,7 @@ export function askName(): string {
 export function askBetMoney(): number {
     let bet: number;
     do {
-        bet = parseFloat(promptSync()('Enter your bet amount: '));
-    } while (isNaN(bet) || bet <= 0);
-    return bet;
+      bet = parseFloat(promptSync()('Enter your bet amount: '));
+    } while (isNaN(bet) || bet <= 0); 
+    return bet; 
 }

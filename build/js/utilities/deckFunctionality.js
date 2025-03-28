@@ -9,8 +9,18 @@ function createDeck() {
     return suits.flatMap(suit => values.map(value => ({ suit, value })));
 }
 function shuffleDeck(deck) {
-    return deck.sort(() => Math.random() - 0.5);
+    // fisher yates shuffling
+    for (let i = deck.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]]; // Swap elements
+    }
+    return deck;
 }
 function drawCard(deck) {
-    return deck.length > 0 ? deck.pop() : null;
+    if (deck.length === 0) {
+        console.log("Deck is empty! Reshuffling...");
+        deck = shuffleDeck(createDeck());
+    }
+    console.log(deck.length);
+    return deck.pop();
 }

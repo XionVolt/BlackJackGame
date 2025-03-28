@@ -18,5 +18,9 @@ function askBetMoney() {
         (0, commands_1.displayRules)();
         return askBetMoney();
     }
+    else if (isNaN(Number(bet))) {
+        console.log("Invalid bet amount. Please enter a valid number.");
+        return askBetMoney();
+    }
     return Number(bet);
 }

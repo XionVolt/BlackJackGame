@@ -8,9 +8,21 @@ export function createDeck(): Card[] {
 }
 
 export function shuffleDeck(deck: Card[]): Card[] {
-    return deck.sort(() => Math.random() - 0.5);
+
+    // fisher yates shuffling
+        for (let i = deck.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [deck[i], deck[j]] = [deck[j], deck[i]]; // Swap elements
+        }
+        return deck;
+    
 }
 
 export function drawCard(deck: Card[]): Card | null {
-    return deck.length > 0 ? deck.pop()! : null;
-}
+    if (deck.length === 0) {
+        console.log("Deck is empty! Reshuffling...");
+        deck = shuffleDeck(createDeck());  
+    }
+    console.log(deck.length)
+    return deck.pop()!;
+}   //! this function should be updated because it not properly handle the case when deck becomes empty(see if condition)

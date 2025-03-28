@@ -40,8 +40,8 @@ function calculateTotal(hand) {
     return total;
 }
 function blackjackGame() {
-    console.log("Welcome to Blackjack!\n--------------------------------------------------------------------------------");
-    console.log('For rules, type "/rules, Good luck!"\n--------------------------------------------------------------------------------');
+    console.log("Welcome to Blackjack!");
+    (0, commands_1.displayCommands)();
     const playerName = (0, takeInputs_1.askName)();
     const player = new playerMoney_1.Player(); // first param takes initial money, so initial money can be change from here
     while (player.getMoney() > 0) {

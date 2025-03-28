@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.displayRules = displayRules;
+exports.displayCommands = displayCommands;
 function displayRules() {
     console.log(`\n"==== Blackjack Rules ===="`);
     console.log("----------------------------------------------------------------");
@@ -15,4 +16,12 @@ function displayRules() {
     console.log("9. Blackjack (Ace + 10/J/Q/K) pays 3:2 if the dealer does not have Blackjack.");
     console.log("----------------------------------------------------------------");
     console.log("Type your next move!\n");
+}
+function displayCommands() {
+    console.log('\nCommands:');
+    console.log('--------------------------------------------------------------------------------');
+    // ----- Tell Commands to users -----
+    console.log('1. For rules, type "/rules"');
+    console.log('2. For quit the game, type "/quit"');
+    console.log('--------------------------------------------------------------------------------');
 }

@@ -14,3 +14,13 @@ export function displayRules(): void {
     console.log("Type your next move!\n");
 }
 
+
+export function displayCommands () {
+
+    console.log('\nCommands:')
+    console.log('--------------------------------------------------------------------------------');
+    // ----- Tell Commands to users -----
+    console.log('1. For rules, type "/rules"');
+    console.log('2. For quit the game, type "/quit"');
+    console.log('--------------------------------------------------------------------------------');
+}                       

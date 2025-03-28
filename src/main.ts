@@ -3,7 +3,7 @@ import { createDeck, shuffleDeck, drawCard, Card } from "./utilities/deckFunctio
 import { Player } from "./utilities/playerMoney";
 import { placeBet } from "./utilities/betLogic";
 import { askName, askBetMoney } from "./utilities/takeInputs";
-import {displayRules} from './utilities/commands';
+import {displayRules,displayCommands} from './utilities/commands';
 
 const prompt = promptSync();
 const suitSymbols: Record<string, string> = {
@@ -40,8 +40,10 @@ function calculateTotal(hand: Card[]): number {
 }
 
 function blackjackGame() {
-    console.log("Welcome to Blackjack!\n--------------------------------------------------------------------------------");
-    console.log('For rules, type "/rules, Good luck!"\n--------------------------------------------------------------------------------');
+    console.log("Welcome to Blackjack!");
+
+    displayCommands();
+    
     const playerName = askName();
     const player = new Player(); // first param takes initial money, so initial money can be change from here
 
