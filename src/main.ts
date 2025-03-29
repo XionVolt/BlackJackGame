@@ -1,43 +1,11 @@
-import promptSync from 'prompt-sync';
-import { createDeck, shuffleDeck, drawCard, Card } from "./utilities/deckFunctionality";
+import { createDeck, shuffleDeck, drawCard, Card,suitSymbols } from "./utilities/deckFunctionality";
 import { Player } from "./utilities/playerMoney";
 import { placeBet } from "./utilities/betLogic";
-import { askName, askBetMoney } from "./utilities/takeInputs";
-import {displayRules,displayCommands} from './utilities/commands';
+import { askName, askBetMoney, actionHitOrStand } from "./utilities/takeInputs";
+import {displayRules,displayCommands,displayHand} from './utilities/display';
+import { calculateTotal } from './utilities/calculate';
 
-const prompt = promptSync();
-const suitSymbols: Record<string, string> = {
-    "Hearts": "♥", "Diamonds": "♦", "Clubs": "♣", "Spades": "♠"
-};
-
-function displayHand(hand: Card[], isDealer = false): string {
-    const formattedHand = hand.map(card => `${card.value}${suitSymbols[card.suit]}`).join(", ");
-    const total = calculateTotal(hand);
-    return isDealer ? `Dealer's Hand: ${formattedHand} (Total: ${total})` : `Your Hand: ${formattedHand} (Total: ${total})`;
-}
-
-function calculateTotal(hand: Card[]): number {
-    let total = 0;
-    let aces = 0;
-    
-    for (const card of hand) {
-        if (card.value === "A") {
-            aces += 1;
-            total += 11;
-        } else if (["K", "Q", "J"].includes(card.value)) {
-            total += 10;
-        } else {
-            total += parseInt(card.value);
-        }
-    }
-    
-    while (total > 21 && aces > 0) {
-        total -= 10;
-        aces -= 1;
-    }
-    
-    return total;
-}
+// ----- Main Function -----
 
 function blackjackGame() {
     console.log("Welcome to Blackjack!");
@@ -48,12 +16,12 @@ function blackjackGame() {
     const player = new Player(); // first param takes initial money, so initial money can be change from here
 
     
-    while (player.getMoney() > 0) {
+    outestloop: while (player.getMoney() > 0) {
         let deck = shuffleDeck(createDeck());
         let playerHand: Card[] = [drawCard(deck)!, drawCard(deck)!];
         let dealerHand: Card[] = [drawCard(deck)!, drawCard(deck)!];
         
-        console.log(`${playerName}, you have $${player.getMoney()} for betting`);
+        console.log(`${playerName[0].toUpperCase() + playerName.slice(1).toLowerCase()}, you have $${player.getMoney()} for betting`);
         
 
 
@@ -64,10 +32,20 @@ function blackjackGame() {
         console.log(displayHand(playerHand));
         console.log(`Dealer's Hand: ${dealerHand[0].value}${suitSymbols[dealerHand[0].suit]}, [Hidden]`);
         
+        // ------- Blackjack (Ace + 10/J/Q/K) --------
+
+        if (calculateTotal(playerHand) === 21) {
+            console.log("Blackjack! You win!");
+            player.updateMoney(bet * 2.5); 
+            continue;
+        }
+
+        // ---------------------------------------
         let playerTurn = true;
         while (playerTurn) {
 
-            let action = prompt("Do you want to (h)it or (s)tand? ").toLowerCase().trim();
+            let action = actionHitOrStand()    
+
             if (action === "h") {
                 const newCard = drawCard(deck)!;
                 playerHand.push(newCard);
@@ -76,7 +54,13 @@ function blackjackGame() {
                 if (calculateTotal(playerHand) > 21) {
                     console.log("Bust! You lose.");
                     playerTurn = false;
+                } else if (calculateTotal(playerHand) === 21) {
+                    console.log("You win!");
+                    player.updateMoney(bet * 2);
+                    playerTurn = false
+                    continue outestloop
                 }
+
             } else if (action === "s") {
                 playerTurn = false;
             }
@@ -85,6 +69,8 @@ function blackjackGame() {
             }
 
         }
+        
+
         
         if (calculateTotal(playerHand) <= 21) {
             console.log("Dealer's Turn...");
@@ -101,11 +87,14 @@ function blackjackGame() {
             const dealerTotal = calculateTotal(dealerHand);
             if (dealerTotal > 21 || playerTotal > dealerTotal) {
                 console.log("You win!");
+                console.log('testing', bet*2)
+                console.log('testing2', player.getMoney())
                 player.updateMoney(bet * 2);
             } else if (playerTotal === dealerTotal) {
                 console.log("Push! Your bet is returned.");
                 player.updateMoney(bet);
-            } else {
+            }
+            else {
                 console.log("Dealer wins.");
             }
         }

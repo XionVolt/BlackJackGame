@@ -1,3 +1,8 @@
+export const suitSymbols: Record<string, string> = {
+    "Hearts": "♥", "Diamonds": "♦", "Clubs": "♣", "Spades": "♠"
+};
+
+
 export type Card = { suit: string; value: string };
 
 const suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
@@ -18,11 +23,6 @@ export function shuffleDeck(deck: Card[]): Card[] {
     
 }
 
-export function drawCard(deck: Card[]): Card | null {
-    if (deck.length === 0) {
-        console.log("Deck is empty! Reshuffling...");
-        deck = shuffleDeck(createDeck());  
-    }
-    console.log(deck.length)
+export function drawCard(deck: Card[]): Card {
     return deck.pop()!;
-}   //! this function should be updated because it not properly handle the case when deck becomes empty(see if condition)
+}   

@@ -2,6 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.displayRules = displayRules;
 exports.displayCommands = displayCommands;
+exports.displayHand = displayHand;
+const calculate_1 = require("./calculate");
+const deckFunctionality_1 = require("./deckFunctionality");
+// --------------------------------------------------------
 function displayRules() {
     console.log(`\n"==== Blackjack Rules ===="`);
     console.log("----------------------------------------------------------------");
@@ -25,4 +29,9 @@ function displayCommands() {
     console.log('2. For quit the game, type "/quit"');
     console.log('--------------------------------------------------------------------------------');
     console.log('\n');
+}
+function displayHand(hand, isDealer = false) {
+    const formattedHand = hand.map(card => `${card.value}${deckFunctionality_1.suitSymbols[card.suit]}`).join(", ");
+    const total = (0, calculate_1.calculateTotal)(hand);
+    return isDealer ? `Dealer's Hand: ${formattedHand} (Total: ${total})` : `Your Hand: ${formattedHand} (Total: ${total})`;
 }

@@ -1,8 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.suitSymbols = void 0;
 exports.createDeck = createDeck;
 exports.shuffleDeck = shuffleDeck;
 exports.drawCard = drawCard;
+exports.suitSymbols = {
+    "Hearts": "♥", "Diamonds": "♦", "Clubs": "♣", "Spades": "♠"
+};
 const suits = ["Hearts", "Diamonds", "Clubs", "Spades"];
 const values = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"];
 function createDeck() {
@@ -17,10 +21,5 @@ function shuffleDeck(deck) {
     return deck;
 }
 function drawCard(deck) {
-    if (deck.length === 0) {
-        console.log("Deck is empty! Reshuffling...");
-        deck = shuffleDeck(createDeck());
-    }
-    console.log(deck.length);
     return deck.pop();
 }

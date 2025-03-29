@@ -1,3 +1,10 @@
+// ------ Dependencies of displayHand function------
+import { Card } from "./deckFunctionality";
+import { calculateTotal } from "./calculate";
+import { suitSymbols } from "./deckFunctionality";
+
+// --------------------------------------------------------
+
 export function displayRules(): void {
     console.log(`\n"==== Blackjack Rules ===="`);
     console.log("----------------------------------------------------------------");
@@ -23,4 +30,12 @@ export function displayCommands () {
     console.log('1. For rules, type "/rules"');
     console.log('2. For quit the game, type "/quit"');
     console.log('--------------------------------------------------------------------------------');
+    console.log('\n')
 }                       
+
+
+export function displayHand(hand: Card[], isDealer = false): string {
+    const formattedHand = hand.map(card => `${card.value}${suitSymbols[card.suit]}`).join(", ");
+    const total = calculateTotal(hand);
+    return isDealer ? `Dealer's Hand: ${formattedHand} (Total: ${total})` : `Your Hand: ${formattedHand} (Total: ${total})`;
+}

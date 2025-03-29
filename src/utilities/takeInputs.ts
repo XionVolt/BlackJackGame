@@ -1,13 +1,13 @@
 import promptSync from 'prompt-sync';
 const prompt = promptSync();
-import {displayRules} from './commands';
+import {displayRules} from './display';
 
-function askName () {
+export function askName () {
    const name = prompt('What is your name? '); 
    return name
 }
 
-function askBetMoney () {
+export function askBetMoney () {
     const bet = prompt("Place your bet: ");
     if (bet == '/rules') {
         displayRules();
@@ -20,7 +20,9 @@ function askBetMoney () {
     return Number(bet);
 }
 
+export function actionHitOrStand () {
+    const action = prompt("(h)it or (s)tand? ").toLowerCase().trim();
+    return action
+} 
 
 
-// --------- exports ------------
-export { askName,askBetMoney }
